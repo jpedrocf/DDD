@@ -1,6 +1,6 @@
-# 🃏 Dungeon Deck of Doom (DDD): A Game of Strategy and Survival  
+# 🃏 Dungeon Deck of Doom (DDD): Scoundrel Solo Dungeon Crawler  
 
-**Dungeon Deck** é um jogo de cartas roguelike no terminal, onde estratégia e sorte definem seu destino. Você se aventura em uma masmorra cheia de criaturas sombrias, poções místicas e armas poderosas. Cada carta representa uma escolha crítica: atacar, se defender ou se curar. Seu objetivo? Sobreviver até o final do baralho!  
+**Dungeon Deck of Doom** é um jogo de cartas roguelike no terminal, onde estratégia e sorte definem seu destino. Você se aventura em uma masmorra cheia de criaturas sombrias, poções místicas e armas poderosas. Cada carta representa uma escolha crítica: atacar, se defender ou se curar. Seu objetivo? Sobreviver até o final do baralho!  
 
 ## 🎮 Como Jogar  
 - Você começa com **20 pontos de vida (HP)** e deve enfrentar os perigos da masmorra.  
