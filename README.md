@@ -21,7 +21,7 @@
 - Por ser um jogo difícil de vencer, o sistema de **recordes** armazena os **5 melhores desempenhos** (menos cartas restantes ao ser derrotado).
 
 
-## 🚀 Tecnologias Utilizadas  
+## 💻 Tecnologias Utilizadas  
 - **Python** para a lógica do jogo.  
 - **Arquivos de texto (`recordes.txt`)** para salvar os recordes dos jogadores.  
 - **Uso de `random`** para embaralhar cartas e garantir partidas sempre diferentes.  
