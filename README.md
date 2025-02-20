@@ -26,7 +26,12 @@
 - **Arquivos de texto (`recordes.txt`)** para salvar os recordes dos jogadores.  
 - **Uso de `random`** para embaralhar cartas e garantir partidas sempre diferentes.  
 
-## 📌 Instalação e Execução  
-1. Clone o repositório:  
-   ```bash
-   git clone https://github.com/seuusuario/dungeon-deck.git
+## 🚀 Como Executar  
+1. **Baixe o repositório**  
+   ```sh
+   git clone https://github.com/jpedrocf/DDD.git
+   cd DDD
+
+2. Execute o jogo
+   ```sh
+   python Dungeon_Deck_of_Doom.py
