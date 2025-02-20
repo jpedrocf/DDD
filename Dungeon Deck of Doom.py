@@ -12,6 +12,28 @@ deck = [
     if not (naipe in [" ♥", " ♦"] and valor in ["A", "K", "Q", "J"])
 ]
 
+#### FUNÇÕES ###
+
+# Recorde
+def carregar_recordes():
+    try:
+        with open("recordes.txt", "r") as file:
+            recordes = [int(linha.strip()) for linha in file.readlines()]
+            return sorted(recordes, reverse=True)[:5]  # Mantém apenas o Top 5
+    except (FileNotFoundError, ValueError):
+        return []
+
+    
+# Salvar Recorde
+def salvar_recordes(novo_recorde):
+    recordes = carregar_recordes()  # Pega os recordes atuais
+    recordes.append(novo_recorde)   # Adiciona o novo recorde
+    recordes = sorted(recordes, reverse=True)[:5]  # Mantém só os 5 maiores
+    
+    with open("recordes.txt", "w") as file:
+        for recorde in recordes:
+            file.write(f"{recorde}\n")  # Salva os recordes no arquivo
+
 
 # Classificador de carta
 def classificar_carta(carta):
@@ -64,13 +86,10 @@ def atribuir_valor_carta(valor_carta):
 def comprar_cartas(deck, cartas_compradas):
     if len(cartas_compradas) == 1:
         novas_cartas = random.sample(deck, min(3, len(deck)))
-        for carta in novas_cartas:
-            deck.remove(carta)
         cartas_compradas.extend((carta, classificar_carta(carta)) for carta in novas_cartas)
     elif len(cartas_compradas) == 0:
-        cartas_compradas.extend((carta, classificar_carta(carta)) for carta in random.sample(deck, min(4, len(deck))))
-        for carta, _ in cartas_compradas:
-            deck.remove(carta)
+        novas_cartas = random.sample(deck, min(4, len(deck)))
+        cartas_compradas.extend((carta, classificar_carta(carta)) for carta in novas_cartas)
     return cartas_compradas
 
 # Função para o usuário escolher uma carta
@@ -98,6 +117,7 @@ def jogar(deck, health):
                 print("Entrada inválida. Por favor, digite um número.")
         
         carta_escolhida, tipo = cartas_compradas.pop(escolha)
+        deck.remove(carta_escolhida)
         valor_carta = atribuir_valor_carta(carta_escolhida[:-2])
         
         if tipo in ["Bat 🦇", "Skeleton 💀", "Zombie 🧟", "Ghost 👻", "Vampire 🧛", "Ooga Booga 👹", "Dragon 🐉", "Dark Wizard of Doom and Despair 🧙"]:
@@ -126,6 +146,8 @@ health, power = jogar(deck, health)
 # Exibir o número de cartas restantes no deck
 print(f'\n❤️  {health} HP  |  ⚔️  {power} Power  | Cartas restantes no deck: {len(deck)}')
 
+# Carregar recordes
+recordes = carregar_recordes()
 
 # Game Over ou Win
 if len(deck) == 0 and health > 0:
@@ -133,3 +155,11 @@ if len(deck) == 0 and health > 0:
 
 if health <= 0:
     print(f'Você foi derrotado, mais uma vez...')
+
+if len(recordes) < 5 or len(deck) < max(recordes):
+    salvar_recordes(len(deck))
+    print(f"🎉 Novo recorde! {len(deck)} cartas restantes.")
+
+print("\n🏆 Top 5 Recordes:")
+for i, rec in enumerate(sorted(carregar_recordes()), 1):  # Ordena do menor para o maior
+    print(f"{i}. {rec} cartas restantes")
