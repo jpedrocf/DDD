@@ -1,4 +1,5 @@
 import random
+import time
 
 health = 20
 
@@ -19,22 +20,22 @@ def carregar_recordes():
     try:
         with open("recordes.txt", "r") as file:
             recordes = [linha.strip().split(", ") for linha in file.readlines()]
-            recordes = [(int(cartas), int(andar)) for cartas, andar in recordes]  # Converte para tuplas de (cartas, andar)
-            # Ordena pela quantidade de cartas de forma crescente e pelo andar
-            return sorted(recordes, key=lambda x: (x[0], x[1]))[:5]  # Exibe apenas os 5 melhores
+            recordes = [(int(cartas), int(andar), float(tempo)) for cartas, andar, tempo in recordes]  # Converte para tuplas com tempo
+            # Ordena pela quantidade de cartas, andar e tempo (menor tempo primeiro)
+            return sorted(recordes, key=lambda x: (x[0], x[1], x[2]))[:5]  # Exibe apenas os 5 melhores
     except (FileNotFoundError, ValueError):
         return []
     
 # Salvar Recorde
-def salvar_recordes(cartas_restantes, andar):
+def salvar_recordes(cartas_restantes, andar, tempo):
     # Carrega todos os registros existentes
-    recordes = carregar_recordes()  
-    recordes.append((cartas_restantes, andar))  # Adiciona o novo registro
+    recordes = carregar_recordes()
+    recordes.append((cartas_restantes, andar, tempo))  # Adiciona o novo registro
 
     # Salva todos os registros de volta no arquivo
     with open("recordes.txt", "w") as file:
-        for cartas, andar in recordes:
-            file.write(f"{cartas}, {andar}\n")  # Salva todos os jogos
+        for cartas, andar, tempo in recordes:
+            file.write(f"{cartas}, {andar}, {tempo}\n")  # Salva todos os jogos com o tempo de duração do jogo
 
 
 # Classificador de carta
@@ -112,6 +113,9 @@ def jogar(deck, health):
     cartas_compradas = []
     andar = 1
     
+    # Início do contador de tempo
+    start_time = time.time()
+     
     while len(deck) > 0 and health > 0:
         cartas_compradas, andar = comprar_cartas(deck, cartas_compradas, andar)
         
@@ -151,33 +155,38 @@ def jogar(deck, health):
             last_monster = None 
         
         print(f"\nVocê usou a carta {carta_escolhida} - {tipo}")
+
+    end_time = time.time()
+    game_time = end_time - start_time
     
-    return health, power, andar
+    return health, power, andar, game_time
 
  
 # chamando a função
-health, power, andar = jogar(deck, health)
+health, power, andar, game_time = jogar(deck, health)
 
 # Exibir o número de cartas restantes no deck
-print(f'\n❤️  {health} HP  |  ⚔️  {power} Power  | Cartas restantes no deck: {len(deck)}  |  🏰 Andar {andar}')
+print(f'\n❤️  {health} HP  |  ⚔️  {power} Power  | Cartas restantes no deck: {len(deck)}  |  🏰 Andar {andar}   |   ⏲️ {game_time}')
 
 # Carregar recordes
 recordes = carregar_recordes()
 
 # Game Over ou Win
 if len(deck) == 0 and health > 0:
-    print('You Win! 🎉')
+    print(f'You Win! 🎉  |   ⏲️ {game_time}')
 
 if health <= 0:
     print(f'Você foi derrotado, mais uma vez...')
 
+
+salvar_recordes(len(deck), andar, game_time)  # Passa as cartas restantes, o andar e o tempo da partida
+
 # Salvar o novo recorde se necessário
 if len(recordes) < 5 or len(deck) < min([r[0] for r in recordes]):
-    salvar_recordes(len(deck), andar)  # Passa as cartas restantes e o andar
     print(f"🎉 Novo recorde! {len(deck)} cartas restantes  |  {andar}º Andar.")
 
 # Exibir os Top 5 Recordes
 print("\n🏆 Top 5 Recordes:")
 recordes = sorted(carregar_recordes(), key=lambda x: (x[0], x[1]))[:5] # Carrega todos os recordes, ordena e exibe apenas os 5 melhores
-for i, (cartas, andar) in enumerate(recordes, 1):
-    print(f"{i}. {cartas} cartas restantes | {andar}º Andar.")
+for i, (cartas, andar, tempo) in enumerate(recordes, 1):
+    print(f"{i}. {cartas} cartas restantes | {andar}º Andar  |  ⏲️   {tempo:.2f} segundos.")
