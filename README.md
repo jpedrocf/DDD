@@ -29,8 +29,8 @@
 ## 🚀 Como Executar  
 1. **Baixe o repositório**  
    ```sh
-   git clone https://github.com/jpedrocf/DDD.git
-   cd DDD
+   git clone https://github.com/jpedrocf/DDD-Python-Card-Game.git
+   cd DDD-Python-Card-Game
 
 2. Execute o jogo
    ```sh
