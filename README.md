@@ -18,11 +18,8 @@
 
 ### 🏆 Objetivo  
 - O jogo termina quando **todas as cartas forem usadas** (vitória) ou quando seu **HP chegar a zero** (derrota).  
-- O sistema de **recordes** armazena os **5 melhores desempenhos** (menos cartas restantes ao vencer).  
+- Por ser um jogo difícil de vencer, o sistema de **recordes** armazena os **5 melhores desempenhos** (menos cartas restantes ao ser derrotado).
 
-
-## 🏆 Recordes  
-O jogo salva automaticamente os **5 melhores recordes** (menor número de cartas restantes ao vencer). Será que você consegue superar seu próprio desempenho?  
 
 ## 🚀 Tecnologias Utilizadas  
 - **Python** para a lógica do jogo.  
