@@ -20,19 +20,21 @@ def carregar_recordes():
         with open("recordes.txt", "r") as file:
             recordes = [linha.strip().split(", ") for linha in file.readlines()]
             recordes = [(int(cartas), int(andar)) for cartas, andar in recordes]  # Converte para tuplas de (cartas, andar)
-            return sorted(recordes, key=lambda x: (x[0], x[1]))[:5]  # Ordena pela quantidade de cartas de forma crescente e pelo andar
+            # Ordena pela quantidade de cartas de forma crescente e pelo andar
+            return sorted(recordes, key=lambda x: (x[0], x[1]))[:5]  # Exibe apenas os 5 melhores
     except (FileNotFoundError, ValueError):
         return []
     
 # Salvar Recorde
 def salvar_recordes(cartas_restantes, andar):
-    recordes = carregar_recordes()  # Pega os recordes atuais
-    recordes.append((cartas_restantes, andar))  # Adiciona a tupla (cartas_restantes, andar)
-    recordes = sorted(recordes, key=lambda x: (x[0], x[1]))[:5]  # Ordena pela quantidade de cartas de forma crescente e pelo andar
-    
+    # Carrega todos os registros existentes
+    recordes = carregar_recordes()  
+    recordes.append((cartas_restantes, andar))  # Adiciona o novo registro
+
+    # Salva todos os registros de volta no arquivo
     with open("recordes.txt", "w") as file:
         for cartas, andar in recordes:
-            file.write(f"{cartas}, {andar}\n")  # Salva as tuplas no formato "cartas, andar"
+            file.write(f"{cartas}, {andar}\n")  # Salva todos os jogos
 
 
 # Classificador de carta
@@ -176,5 +178,6 @@ if len(recordes) < 5 or len(deck) < min([r[0] for r in recordes]):
 
 # Exibir os Top 5 Recordes
 print("\n🏆 Top 5 Recordes:")
-for i, (cartas, andar) in enumerate(sorted(carregar_recordes(), key=lambda x: (x[0], x[1])), 1):
+recordes = sorted(carregar_recordes(), key=lambda x: (x[0], x[1]))[:5] # Carrega todos os recordes, ordena e exibe apenas os 5 melhores
+for i, (cartas, andar) in enumerate(recordes, 1):
     print(f"{i}. {cartas} cartas restantes | {andar}º Andar.")
