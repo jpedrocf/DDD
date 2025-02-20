@@ -1,4 +1,4 @@
-# 🃏 Dungeon Deck of Doom (DDD): Scoundrel Solo Dungeon Crawler 🃏
+# 🃏 Dungeon Deck of Doom (DDD): Scoundrel Solo Dungeon Crawler
 
 **Dungeon Deck of Doom** é um jogo de cartas roguelike no terminal, onde estratégia e sorte definem seu destino. Você se aventura em uma masmorra cheia de criaturas sombrias, poções místicas e armas poderosas. Cada carta representa uma escolha crítica: atacar, se defender ou se curar. Seu objetivo? Sobreviver até o final do baralho!  
 
